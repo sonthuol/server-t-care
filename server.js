@@ -15,6 +15,11 @@ app.use(
   })
 );
 
+const db = require("./app/models");
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Auto migration");
+});
+
 app.get("/", (req, res) => {
   res.json({ message: "Wellcome to T-care application" });
 });
