@@ -16,13 +16,42 @@ app.use(
 );
 
 const db = require("./app/models");
-db.sequelize.sync({ force: true }).then(() => {
+const Role = db.role;
+db.sequelize.sync({ force: false }).then(() => {
   console.log("Auto migration");
+  // initial();
 });
+function initial() {
+  Role.create({
+    id: 1,
+    name: "root",
+    descriptionRole: "root",
+  });
+
+  Role.create({
+    id: 2,
+    name: "admin",
+    descriptionRole: "admin",
+  });
+
+  Role.create({
+    id: 3,
+    name: "doctor",
+    descriptionRole: "doctor",
+  });
+  Role.create({
+    id: 4,
+    name: "receptionist",
+    descriptionRole: "receptionist",
+  });
+}
 
 app.get("/", (req, res) => {
   res.json({ message: "Wellcome to T-care application" });
 });
+
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

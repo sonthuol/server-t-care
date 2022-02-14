@@ -1,35 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
-  const Patient = sequelize.define("patients", {
+  const User = sequelize.define("users", {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    username: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    age: {
+    email: {
       type: Sequelize.STRING,
-    },
-    gender: {
-      type: Sequelize.BOOLEAN,
-      default: true,
-    },
-    phoneNumber: {
-      type: Sequelize.STRING(12),
       allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
-    address: {
-      type: Sequelize.TEXT,
-    },
-    image: {
-      type: Sequelize.TEXT,
     },
     isActive: {
       type: Sequelize.BOOLEAN,
@@ -39,9 +26,15 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       default: false,
     },
+    addBy: {
+      type: Sequelize.INTEGER,
+    },
+    updateBy: {
+      type: Sequelize.INTEGER,
+    },
     deleteBy: {
       type: Sequelize.INTEGER,
     },
   });
-  return Patient;
+  return User;
 };
