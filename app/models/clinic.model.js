@@ -1,4 +1,3 @@
-const Specialty = require("./specialty.model");
 module.exports = (sequelize, Sequelize) => {
   const Clinic = sequelize.define("clinics", {
     id: {

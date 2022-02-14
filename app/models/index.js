@@ -15,18 +15,58 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+// Tạo bảng Phòng khám
 db.clinic = require("../models/clinic.model")(sequelize, Sequelize);
+// Tạo bảng Chuyên khoa
 db.specialty = require("../models/specialty.model")(sequelize, Sequelize);
-db.specialty.belongsToMany(db.clinic, {
-  through: "clinic_specialties",
-  foreignKey: "clinicId",
-  otherKey: "specialtyId",
-  timestamps: false,
-});
+// Tạo bảng bác sĩ
+db.doctor = require("../models/doctor.model")(sequelize, Sequelize);
+
+//Một phòng khám có nhiều chuyên khoa
 db.clinic.belongsToMany(db.specialty, {
   through: "clinic_specialties",
   foreignKey: "specialtyId",
   otherKey: "clinicId",
   timestamps: false,
 });
+
+// Một chuyên khoa có nhiều phòng khám
+db.specialty.belongsToMany(db.clinic, {
+  through: "clinic_specialties",
+  foreignKey: "clinicId",
+  otherKey: "specialtyId",
+  timestamps: false,
+});
+
+//Một bác sĩ thuộc một phòng khám
+db.doctor.hasOne(db.clinic, {
+  through: "clinic_doctors",
+  foreignKey: "clinicId",
+  otherKey: "doctorId",
+  timestamps: false,
+});
+
+//Một phòng khám có nhiều bác sĩ
+db.clinic.belongsToMany(db.doctor, {
+  through: "clinic_doctors",
+  foreignKey: "doctorId",
+  otherKey: "clinicId",
+  timestamps: false,
+});
+
+//Một chuyên khoa có nhiều bác sĩ
+db.specialty.belongsToMany(db.doctor, {
+  through: "specialty_doctors",
+  foreignKey: "doctorId",
+  otherKey: "specialtyId",
+  timestamps: false,
+});
+//Một một bác sĩ có nhiều chuyên khoa
+db.doctor.hasOne(db.specialty, {
+  through: "clinic_doctors",
+  foreignKey: "specialtyId",
+  otherKey: "doctorId",
+  timestamps: false,
+});
+
 module.exports = db;
