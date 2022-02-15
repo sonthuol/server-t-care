@@ -44,7 +44,7 @@ module.exports = function (app) {
   //URL: /api/test/admin
   app.get(
     "/api/test/receptionst",
-    [authJwt.verifyToken],
+    [authJwt.verifyToken, authJwt.isReceptionist],
     controller.receptionstBoard
   );
 };
