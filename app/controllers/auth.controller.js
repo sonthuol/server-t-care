@@ -10,6 +10,16 @@ const bcrypt = require("bcryptjs");
 exports.signUp = async (req, res) => {
   //Lưu tài khoản người dùng vào DB
   try {
+    if (
+      req.body.username === "" ||
+      req.body.email === "" ||
+      req.body.password === ""
+    ) {
+      return res.status(400).send({
+        status: 400,
+        message: "Yêu cầu nhập đầy đủ thông tin",
+      });
+    }
     const user = await User.create({
       username: req.body.username,
       email: req.body.email,
