@@ -52,6 +52,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/clinic.router")(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

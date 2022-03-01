@@ -121,12 +121,37 @@ isReceptionist = async (req, res, next) => {
   }
 };
 
+// Là Root hoặc Admin
+isRootAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.userId);
+    const roles = await user.getRoles();
+
+    for (let i = 0; i < roles.length; i++) {
+      if (roles[i].name === "root" || roles[i].name === "admin") {
+        return next();
+      }
+    }
+    return res.status(403).send({
+      status: 403,
+      message: "Required Receptionist Role || Bắt buộc vai trò là Receptionist",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      status: 500,
+      message:
+        "Unable to validate User role! || Không thể xác nhận vai trò của người dùng ",
+    });
+  }
+};
+
 const authJwt = {
   verifyToken,
   isRoot,
   isAdmin,
   isDoctor,
   isReceptionist,
+  isRootAdmin,
 };
 
 module.exports = authJwt;
