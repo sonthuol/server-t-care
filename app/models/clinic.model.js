@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.TEXT,
     },
+    status: {
+      type: Sequelize.BOOLEAN,
+      default: true,
+    },
     isDelete: {
       type: Sequelize.BOOLEAN,
       default: false,

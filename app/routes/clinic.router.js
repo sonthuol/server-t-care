@@ -47,8 +47,18 @@ module.exports = function (app) {
     controller.update
   );
 
+  //Cập nhật trạngt thái phòng khám (Cập nhẩ giá trị status)
+  //method: PATCH
+  //Access: Root
+  //URL:/api/clinics/:id
+  app.patch(
+    "/api/clinics/changeStatus/:id",
+    [authJwt.verifyToken, authJwt.isRoot],
+    controller.changeStatus
+  );
+
   //Xoá phòng khám (Cập nhẩ giá trị isDelete)
-  //method: PUT
+  //method: PATCH
   //Access: Root
   //URL:/api/clinics/:id
   app.patch(

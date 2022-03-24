@@ -1,5 +1,6 @@
 const db = require("../models");
 const Clinic = db.clinic;
+const User = db.user;
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -30,6 +31,12 @@ exports.getAllClinics = async (req, res) => {
 exports.create = async (req, res) => {
   try {
     const clinic = await Clinic.create(req.body);
+    const user = await User.findAll({
+      where: {
+        username: req.body.username,
+      },
+    });
+    const result = clinic.setUsers(user);
     res.status(200).send({
       status: 200,
       message: "Tạo phòng khám thành công",
@@ -38,7 +45,7 @@ exports.create = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: 500,
-      message: "Tạo phòng khám không thành công",
+      message: "Tạo phòng khám không thành công" + error.message,
       data: [],
     });
   }
@@ -47,7 +54,10 @@ exports.create = async (req, res) => {
 //Chi tiết phòng khám
 exports.details = async (req, res) => {
   try {
-    const clinic = await Clinic.findOne({ where: { id: req.params.id } });
+    const clinic = await Clinic.findOne({
+      where: { id: req.params.id },
+      include: [User],
+    });
     res.status(200).send({
       status: 200,
       message: "Phòng khám tồn tại",
@@ -57,7 +67,7 @@ exports.details = async (req, res) => {
     {
       res.status(500).send({
         status: 500,
-        message: "Phòng khám không tồn tại",
+        message: "Phòng khám không tồn tại " + error.message,
         data: [],
       });
     }
@@ -88,7 +98,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const clinic = await Clinic.update(
-      { isDelete: 1 },
+      { isDelete: 1, deleteBy: req.body.user },
       {
         where: {
           id: req.params.id,
@@ -103,6 +113,29 @@ exports.delete = async (req, res) => {
     res.status(500).send({
       status: 500,
       message: "Xoá phòng khám không thành công",
+    });
+  }
+};
+
+//Cập nhật trạng thái phòng khám
+exports.changeStatus = async (req, res) => {
+  try {
+    const clinic = await Clinic.update(
+      { status: req.body.status, updateBy: req.body.userId },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Cập nhật phòng khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Cập nhật phòng khám không thành công",
     });
   }
 };

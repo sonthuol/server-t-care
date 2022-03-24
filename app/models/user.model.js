@@ -18,6 +18,18 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    fullname: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    phoneNumber: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    address: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     isActive: {
       type: Sequelize.BOOLEAN,
       default: true,

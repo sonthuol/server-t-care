@@ -9,42 +9,47 @@ module.exports = function (app) {
 
   //Ai cũng có quyền truy cập
   //method: GET
-  //URL:/api/test/all
-  app.get("/api/test/all", controller.allAccess);
+  //URL:/api/user/get-all-user
+  app.get("/api/user/get-all-user", controller.getAllUser);
 
-  //Truy cập đối với vai trò root
-  //method: GET
-  //URL: /api/test/root
-  app.get(
-    "/api/test/root",
-    [authJwt.verifyToken, authJwt.isRoot],
-    controller.rootBoard
-  );
+  // //Ai cũng có quyền truy cập
+  // //method: GET
+  // //URL:/api/test/all
+  // app.get("/api/test/all", controller.allAccess);
 
-  //Truy cập đối với vai trò admin
-  //method: GET
-  //URL: /api/test/admin
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  // //Truy cập đối với vai trò root
+  // //method: GET
+  // //URL: /api/test/root
+  // app.get(
+  //   "/api/test/root",
+  //   [authJwt.verifyToken, authJwt.isRoot],
+  //   controller.rootBoard
+  // );
 
-  //Truy cập đối với vai trò doctor
-  //method: GET
-  //URL: /api/test/admin
-  app.get(
-    "/api/test/doctor",
-    [authJwt.verifyToken, authJwt.isDoctor],
-    controller.doctorBoard
-  );
+  // //Truy cập đối với vai trò admin
+  // //method: GET
+  // //URL: /api/test/admin
+  // app.get(
+  //   "/api/test/admin",
+  //   [authJwt.verifyToken, authJwt.isAdmin],
+  //   controller.adminBoard
+  // );
 
-  //Truy cập đối với vai trò receptionst
-  //method: GET
-  //URL: /api/test/admin
-  app.get(
-    "/api/test/receptionist",
-    [authJwt.verifyToken, authJwt.isReceptionist],
-    controller.receptionstBoard
-  );
+  // //Truy cập đối với vai trò doctor
+  // //method: GET
+  // //URL: /api/test/admin
+  // app.get(
+  //   "/api/test/doctor",
+  //   [authJwt.verifyToken, authJwt.isDoctor],
+  //   controller.doctorBoard
+  // );
+
+  // //Truy cập đối với vai trò receptionst
+  // //method: GET
+  // //URL: /api/test/admin
+  // app.get(
+  //   "/api/test/receptionist",
+  //   [authJwt.verifyToken, authJwt.isReceptionist],
+  //   controller.receptionstBoard
+  // );
 };

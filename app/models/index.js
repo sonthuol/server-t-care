@@ -43,19 +43,48 @@ db.specialty.belongsToMany(db.clinic, {
   otherKey: "specialtyId",
   timestamps: false,
 });
+// //Một phòng khám có nhiều bác sĩ
+// db.clinic.belongsToMany(db.doctor, {
+//   through: "clinic_doctors",
+//   foreignKey: "doctorId",
+//   otherKey: "clinicId",
+//   timestamps: false,
+// });
 
-//Một bác sĩ thuộc một phòng khám
-db.doctor.hasOne(db.clinic, {
-  through: "clinic_doctors",
+// //Một bác sĩ thuộc một phòng khám
+// db.doctor.hasOne(db.clinic, {
+//   through: "clinic_doctors",
+//   foreignKey: "clinicId",
+//   otherKey: "doctorId",
+//   timestamps: false,
+// });
+
+//Một clinic có nhiều doctor
+db.clinic.belongsToMany(db.doctor, {
+  through: "doctor_clinics",
   foreignKey: "clinicId",
   otherKey: "doctorId",
   timestamps: false,
 });
-
-//Một phòng khám có nhiều bác sĩ
-db.clinic.belongsToMany(db.doctor, {
-  through: "clinic_doctors",
+//Một doctor có nhiều clinic
+db.doctor.belongsToMany(db.clinic, {
+  through: "doctor_clinics",
   foreignKey: "doctorId",
+  otherKey: "clinicId",
+  timestamps: false,
+});
+
+//Một clinic có nhiều user
+db.clinic.belongsToMany(db.user, {
+  through: "user_clinics",
+  foreignKey: "clinicId",
+  otherKey: "userId",
+  timestamps: false,
+});
+//Một user có nhiều clinic
+db.user.belongsToMany(db.clinic, {
+  through: "user_clinics",
+  foreignKey: "userId",
   otherKey: "clinicId",
   timestamps: false,
 });
@@ -68,7 +97,7 @@ db.specialty.belongsToMany(db.doctor, {
   timestamps: false,
 });
 //Một một bác sĩ có nhiều chuyên khoa
-db.doctor.hasOne(db.specialty, {
+db.doctor.belongsToMany(db.specialty, {
   through: "clinic_doctors",
   foreignKey: "specialtyId",
   otherKey: "doctorId",
