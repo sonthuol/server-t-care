@@ -12,7 +12,9 @@ exports.getAllUser = async (req, res) => {
         exclude: ["password"],
       },
       where: {
-        isDelete: null,
+        isDelete: {
+          [Op.or]: [0, null],
+        },
       },
       order: [["id", "DESC"]],
       include: [
@@ -104,6 +106,29 @@ exports.delete = async (req, res) => {
     res.status(500).send({
       status: 500,
       message: "Xoá tài khoản không thành công",
+    });
+  }
+};
+
+//Cập nhật trạng thái phòng khám
+exports.changeStatus = async (req, res) => {
+  try {
+    const user = await User.update(
+      { isActive: req.body.status, updateBy: req.body.userId },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Cập nhật tài khoản thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Cập nhật tài khoản không thành công",
     });
   }
 };

@@ -32,9 +32,19 @@ module.exports = function (app) {
   //Access: Root
   //URL:/api/clinics/:id
   app.patch(
-    "/api/uses/:id",
+    "/api/user/:id",
     // [authJwt.verifyToken, authJwt.isRoot],
     controller.delete
+  );
+
+  //Cập nhật thái người dùng (Cập nhẩ giá trị status)
+  //method: PATCH
+  //Access: Root
+  //URL:/api/clinics/:id
+  app.patch(
+    "/api/user/changeStatus/:id",
+    // [authJwt.verifyToken, authJwt.isRoot],
+    controller.changeStatus
   );
 };
 
