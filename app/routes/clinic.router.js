@@ -17,6 +17,16 @@ module.exports = function (app) {
     controller.getAllClinics
   );
 
+  //Hiển thị danh sách phòng khám cần khôi phục(Xoá khỏi mất từ CSDL)
+  //method: GET
+  //Access: Root
+  //URL:/api/clinics/restore
+  app.get(
+    "/api/clinics/restore",
+    [authJwt.verifyToken, authJwt.isRoot],
+    controller.restoreList
+  );
+
   //Hiển thị danh sách tất cả các phòng khám
   //method: GET
   //Access: Root, Admin
@@ -65,5 +75,25 @@ module.exports = function (app) {
     "/api/clinics/:id",
     [authJwt.verifyToken, authJwt.isRoot],
     controller.delete
+  );
+
+  //Xoá phòng khám vĩnh viễn(Xoá khỏi mất từ CSDL)
+  //method: DELETE
+  //Access: Root
+  //URL:/api/clinics/restore/:id
+  app.delete(
+    "/api/clinics/restore/:id",
+    [authJwt.verifyToken, authJwt.isRoot],
+    controller.deleteRestore
+  );
+
+  //Khôi phục phòng khám
+  //method: PATCH
+  //Access: Root
+  //URL:/api/clinics/restore/:id
+  app.patch(
+    "/api/clinics/restore/:id",
+    [authJwt.verifyToken, authJwt.isRoot],
+    controller.restoreClinic
   );
 };

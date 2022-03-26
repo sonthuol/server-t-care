@@ -139,3 +139,66 @@ exports.changeStatus = async (req, res) => {
     });
   }
 };
+
+//Danh sách khôi phục phòng khám
+exports.restoreList = async (req, res) => {
+  try {
+    const clinicRestore = await Clinic.findAll({
+      where: { isDelete: 1 },
+      order: [["id", "DESC"]],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách phòng khám cần khôi phục thành công",
+      data: clinicRestore,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách phòng khám cần khôi phục không thành công",
+    });
+  }
+};
+
+//Xoá phòng khám vĩnh viễn khỏi cơ sở dữ liệu
+exports.deleteRestore = async (req, res) => {
+  try {
+    const clinic = await Clinic.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Xoá vĩnh viễn phòng khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Xoá vĩnh viễn phòng khám không thành công",
+    });
+  }
+};
+
+//Khôi phục phòng khám
+exports.restoreClinic = async (req, res) => {
+  try {
+    const clinic = await Clinic.update(
+      { isDelete: 0, deleteBy: 0 },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Khôi phục phòng khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Khôi phục phòng khám không thành công " + error.message,
+    });
+  }
+};
