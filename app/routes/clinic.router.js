@@ -77,16 +77,6 @@ module.exports = function (app) {
     controller.delete
   );
 
-  //Xoá phòng khám vĩnh viễn(Xoá khỏi mất từ CSDL)
-  //method: DELETE
-  //Access: Root
-  //URL:/api/clinics/restore/:id
-  app.delete(
-    "/api/clinics/restore/:id",
-    [authJwt.verifyToken, authJwt.isRoot],
-    controller.deleteRestore
-  );
-
   //Khôi phục phòng khám
   //method: PATCH
   //Access: Root
@@ -95,5 +85,15 @@ module.exports = function (app) {
     "/api/clinics/restore/:id",
     [authJwt.verifyToken, authJwt.isRoot],
     controller.restoreClinic
+  );
+
+  //Xoá phòng khám vĩnh viễn(Xoá khỏi mất từ CSDL)
+  //method: DELETE
+  //Access: Root
+  //URL:/api/clinics/restore/:id
+  app.delete(
+    "/api/clinics/restore/:id",
+    // [authJwt.verifyToken, authJwt.isRoot],
+    controller.deleteRestore
   );
 };

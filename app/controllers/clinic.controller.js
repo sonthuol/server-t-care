@@ -10,7 +10,11 @@ const { clinic } = require("../models");
 exports.getAllClinics = async (req, res) => {
   try {
     const clinic = await Clinic.findAll({
-      where: { isDelete: 0 },
+      where: {
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
       order: [["id", "DESC"]],
     });
     res.status(200).send({
@@ -147,6 +151,9 @@ exports.restoreList = async (req, res) => {
       where: { isDelete: 1 },
       order: [["id", "DESC"]],
     });
+
+    console.log(clinicRestore);
+
     res.status(200).send({
       status: 200,
       message: "Hiển thị danh sách phòng khám cần khôi phục thành công",
@@ -155,7 +162,9 @@ exports.restoreList = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: 500,
-      message: "Hiển thị danh sách phòng khám cần khôi phục không thành công",
+      message:
+        "Hiển thị danh sách phòng khám cần khôi phục không thành công " +
+        error.message,
     });
   }
 };
