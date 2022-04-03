@@ -7,6 +7,16 @@ module.exports = function (app) {
     next();
   });
 
+  //Người dùng thuộc phòng khám
+  //method: GET
+  //Access: Admin
+  //URL:/api/userBelongClinic/:id
+  app.get(
+    "/api/user/userBelongClinc/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.userBelongClinic
+  );
+
   //Ai cũng có quyền truy cập
   //method: GET
   //URL:/api/user/get-all-user

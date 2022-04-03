@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = db.user;
+const Clinic = db.clinic;
 const Role = db.role;
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
@@ -129,6 +130,28 @@ exports.changeStatus = async (req, res) => {
     res.status(500).send({
       status: 500,
       message: "Cập nhật tài khoản không thành công",
+    });
+  }
+};
+
+//isClinic
+exports.userBelongClinic = async (req, res) => {
+  try {
+    const idClinicOfUser = await User.findOne({
+      include: [Clinic],
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).send({
+      stauts: 200,
+      message: "Success",
+      data: idClinicOfUser.clinics,
+    });
+  } catch (error) {
+    res.status(500).send({
+      stauts: 500,
+      message: "Fail",
     });
   }
 };
