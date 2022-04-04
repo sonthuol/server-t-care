@@ -10,6 +10,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    birthday: {
+      type: Sequelize.STRING,
+    },
+    age: {
+      type: Sequelize.STRING,
+    },
+    gender: {
+      type: Sequelize.BOOLEAN,
+      default: true,
+    },
     phoneNumber: {
       type: Sequelize.STRING(12),
       allowNull: false,
