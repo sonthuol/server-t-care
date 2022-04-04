@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       default: true,
     },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     phoneNumber: {
       type: Sequelize.STRING(12),
       allowNull: false,
