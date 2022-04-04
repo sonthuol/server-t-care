@@ -67,6 +67,16 @@ module.exports = function (app) {
     controller.update
   );
 
+  //Khôi phục chuyên khoa phòng khám
+  //method: PATCH
+  //Access: Admin
+  //URL:/api/specialties/restore/:id
+  app.patch(
+    "/api/specialties/restore/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.restoreSpecialty
+  );
+
   //Xoá chuyên khoa phòng khám (Cập nhẩ giá trị isDelete)
   //method: PATCH
   //Access: Admin
@@ -75,5 +85,15 @@ module.exports = function (app) {
     "/api/specialties/:id",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.delete
+  );
+
+  //Xoá chuyên khoa phòng khám vĩnh viễn(Xoá khỏi mất từ CSDL)
+  //method: DELETE
+  //Access: Admin
+  //URL:/api/specialties/restore/:id
+  app.delete(
+    "/api/specialties/restore/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteRestore
   );
 };

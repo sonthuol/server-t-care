@@ -165,3 +165,47 @@ exports.restoreList = async (req, res) => {
     });
   }
 };
+
+//Khôi phục chuyên khoa
+exports.restoreSpecialty = async (req, res) => {
+  try {
+    const specialty = await Specialty.update(
+      { isDelete: 0, deleteBy: 0 },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Khôi phục chuyên khoa phòng khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Khôi phục chuyên khoa phòng khám không thành công " + error.message,
+    });
+  }
+};
+
+//Xoá chuyên khoa phòng khám vĩnh viễn khỏi cơ sở dữ liệu
+exports.deleteRestore = async (req, res) => {
+  try {
+    const specialty = await Specialty.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Xoá vĩnh viễn chuyên khoa phòng khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Xoá vĩnh viễn chuyên khoa phòng khám không thành công",
+    });
+  }
+};
