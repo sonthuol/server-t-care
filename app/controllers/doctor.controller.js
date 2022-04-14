@@ -69,3 +69,26 @@ exports.create = async (req, res) => {
     });
   }
 };
+
+//Cập nhật trạng thái bác sĩ
+exports.changeStatus = async (req, res) => {
+  try {
+    const doctor = await Doctor.update(
+      { isActive: req.body.isActive, updateBy: req.body.userId },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Cập nhật trạng thái bác sĩ thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Cập nhật trạng thái bác s không thành công",
+    });
+  }
+};

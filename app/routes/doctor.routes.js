@@ -26,4 +26,14 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.create
   );
+
+  //Cập nhật trạng thái bác sĩ (Cập nhẩ giá trị isActive)
+  //method: PATCH
+  //Access: Admin
+  //URL:/api/doctors/:id
+  app.patch(
+    "/api/doctors/changeStatus/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.changeStatus
+  );
 };
