@@ -7,6 +7,16 @@ module.exports = function (app) {
     next();
   });
 
+  //Hiển thị danh sách tất cả các bác sĩ
+  //method: GET
+  //Access: Root, Admin
+  //URL:/api/doctor
+  app.get(
+    "/api/doctors",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getAllDoctors
+  );
+
   //Tạo mới bác sĩ
   //method: POST
   //Access: Admin
