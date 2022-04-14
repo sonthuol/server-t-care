@@ -15,6 +15,11 @@ exports.getAllSpecialties = async (req, res) => {
         },
       },
       order: [["id", "DESC"]],
+      include: [
+        {
+          model: Clinic,
+        },
+      ],
     });
     res.status(200).send({
       status: 200,
@@ -40,8 +45,6 @@ exports.create = async (req, res) => {
         id: req.body.clinicId,
       },
     });
-
-    // clinic.setSpecialties(specialty);
     specialty.setClinics(clinic);
     res.status(200).send({
       status: 200,
