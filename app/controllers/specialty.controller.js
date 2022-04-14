@@ -40,7 +40,9 @@ exports.create = async (req, res) => {
         id: req.body.clinicId,
       },
     });
-    const result = specialty.setClinics(clinic);
+
+    // clinic.setSpecialties(specialty);
+    specialty.setClinics(clinic);
     res.status(200).send({
       status: 200,
       message: "Tạo chuyên khoa thành công",
