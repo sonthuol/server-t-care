@@ -141,3 +141,26 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+//Xoá bác sĩ
+exports.delete = async (req, res) => {
+  try {
+    const doctor = await Doctor.update(
+      { isDelete: 1, deleteBy: req.body.user },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Xoá bác sĩ thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Xoá bác sĩ không thành công",
+    });
+  }
+};

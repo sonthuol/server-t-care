@@ -56,4 +56,14 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.update
   );
+
+  //Xoá chuyên khoa bác sĩ(Cập nhẩ giá trị isDelete)
+  //method: PATCH
+  //Access: Admin
+  //URL:/api/doctors/:id
+  app.patch(
+    "/api/doctors/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.delete
+  );
 };
