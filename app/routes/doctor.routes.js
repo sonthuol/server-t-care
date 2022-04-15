@@ -36,4 +36,24 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.changeStatus
   );
+
+  //Hiển thị bác sĩ theo id
+  //method: GET
+  //Access: Admin
+  //URL:/api/doctors/:id
+  app.get(
+    "/api/doctors/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.details
+  );
+
+  //Cập nhật bác sĩ
+  //method: PUT
+  //Access: Admin
+  //URL:/api/doctors/:id
+  app.put(
+    "/api/doctors/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.update
+  );
 };

@@ -70,6 +70,29 @@ exports.create = async (req, res) => {
   }
 };
 
+//Chi tiết bác sĩ
+exports.details = async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({
+      where: { id: req.params.id },
+      include: [Clinic, Specialty],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Bác sĩ của phòng khám tồn tại",
+      data: doctor,
+    });
+  } catch (error) {
+    {
+      res.status(500).send({
+        status: 500,
+        message: "Bác sĩ của phòng khám không tồn tại " + error.message,
+        data: [],
+      });
+    }
+  }
+};
+
 //Cập nhật trạng thái bác sĩ
 exports.changeStatus = async (req, res) => {
   try {
@@ -89,6 +112,32 @@ exports.changeStatus = async (req, res) => {
     res.status(500).send({
       status: 500,
       message: "Cập nhật trạng thái bác s không thành công",
+    });
+  }
+};
+
+//Sửa bác sĩ
+exports.update = async (req, res) => {
+  try {
+    const doctor = await Doctor.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+    // const specialty = await Specialty.findOne({
+    //   where: {
+    //     id: req.body.specialtyId,
+    //   },
+    // });
+    // doctor.setSpecialties(specialty);
+    res.status(200).send({
+      status: 200,
+      message: "Cập nhật bác sĩ thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Cập nhật bác sĩ không thành công " + error.message,
     });
   }
 };
