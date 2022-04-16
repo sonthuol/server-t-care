@@ -17,6 +17,15 @@ module.exports = function (app) {
     controller.getAllDoctors
   );
 
+  //Hiển thị danh sách bác sĩ cần khôi phục
+  //Access: Root
+  //URL:/api/doctors/restore
+  app.get(
+    "/api/doctors/restore",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.restoreList
+  );
+
   //Tạo mới bác sĩ
   //method: POST
   //Access: Admin
@@ -47,6 +56,26 @@ module.exports = function (app) {
     controller.details
   );
 
+  //Khôi phục bác sĩ
+  //method: PATCH
+  //Access: Admin
+  //URL:/api/doctors/restore/:id
+  app.patch(
+    "/api/doctors/restore/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.restoreDoctor
+  );
+
+  //Xoá bác sĩ(Cập nhẩ giá trị isDelete)
+  //method: PATCH
+  //Access: Admin
+  //URL:/api/doctors/:id
+  app.patch(
+    "/api/doctors/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.delete
+  );
+
   //Cập nhật bác sĩ
   //method: PUT
   //Access: Admin
@@ -57,13 +86,13 @@ module.exports = function (app) {
     controller.update
   );
 
-  //Xoá chuyên khoa bác sĩ(Cập nhẩ giá trị isDelete)
-  //method: PATCH
+  //Xoá bác sĩ vĩnh viễn(Xoá khỏi mất từ CSDL)
+  //method: DELETE
   //Access: Admin
-  //URL:/api/doctors/:id
-  app.patch(
-    "/api/doctors/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.delete
+  //URL:/api/doctors/restore/:id
+  app.delete(
+    "/api/doctors/restore/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteRestore
   );
 };

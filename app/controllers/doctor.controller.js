@@ -164,3 +164,76 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
+//Danh sách khôi phục bác sĩ
+exports.restoreList = async (req, res) => {
+  try {
+    const doctorRestore = await Doctor.findAll({
+      where: { isDelete: 1 },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Clinic,
+        },
+        {
+          model: Specialty,
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách bác sĩ cần khôi phục thành công",
+      data: doctorRestore,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Hiển thị danh sách bác sĩ cần khôi phục không thành công " +
+        error.message,
+    });
+  }
+};
+
+//Khôi phục bác sĩ
+exports.restoreDoctor = async (req, res) => {
+  try {
+    const doctor = await Doctor.update(
+      { isDelete: 0, deleteBy: 0 },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Khôi phục bác sĩ thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Khôi phục bác sĩ không thành công " + error.message,
+    });
+  }
+};
+
+//Xoá bác sĩ vĩnh viễn khỏi cơ sở dữ liệu
+exports.deleteRestore = async (req, res) => {
+  try {
+    const doctor = await Doctor.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Xoá vĩnh viễn bác sĩ thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Xoá vĩnh viễn bác sĩ không thành công",
+    });
+  }
+};

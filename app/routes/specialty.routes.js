@@ -17,8 +17,7 @@ module.exports = function (app) {
     controller.getAllSpecialties
   );
 
-  //Hiển thị danh sách chuyên khoa cần khôi phục(Xoá khỏi mất từ CSDL)
-  //method: GET
+  //Hiển thị danh sách chuyên khoa cần khôi phục
   //Access: Root
   //URL:/api/specialties/restore
   app.get(
