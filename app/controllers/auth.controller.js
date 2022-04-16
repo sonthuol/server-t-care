@@ -98,6 +98,7 @@ exports.signIn = async (req, res) => {
       message: "Đăng nhập thành công",
       data: {
         id: user.id,
+        fullname: user.fullname,
         username: user.username,
         email: user.email,
         accessToken: token,
