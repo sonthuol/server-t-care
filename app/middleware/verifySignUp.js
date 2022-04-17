@@ -18,19 +18,19 @@ checkDuplicateUsernameOrEmail = async (req, res, next) => {
       });
     }
 
-    //Kiểm tra email đã tồn tại trong DB chưa
-    let email = await User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    });
+    // //Kiểm tra email đã tồn tại trong DB chưa
+    // let email = await User.findOne({
+    //   where: {
+    //     email: req.body.email,
+    //   },
+    // });
 
-    if (email) {
-      return res.status(400).send({
-        status: 400,
-        message: "Thất bại, Email đã tồn tại",
-      });
-    }
+    // if (email) {
+    //   return res.status(400).send({
+    //     status: 400,
+    //     message: "Thất bại, Email đã tồn tại",
+    //   });
+    // }
     next();
   } catch (error) {
     return res.status(500).send({
