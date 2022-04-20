@@ -12,7 +12,7 @@ module.exports = function (app) {
   //Access: Admin
   //URL:/api/userBelongClinic/:id
   app.get(
-    "/api/user/userBelongClinc/:id",
+    "/api/user/userBelongClinic/:id",
     // [authJwt.verifyToken, authJwt.isAdmin],
     controller.userBelongClinic
   );

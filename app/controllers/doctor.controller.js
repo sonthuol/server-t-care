@@ -56,6 +56,12 @@ exports.create = async (req, res) => {
     });
     doctor.setClinics(clinic);
     doctor.setSpecialties(specialty);
+    const user = await User.findOne({
+      where: {
+        username: req.body.username,
+      },
+    });
+    doctor.setUsers(user);
     res.status(200).send({
       status: 200,
       message: "Tạo mới bác sĩ thành công",

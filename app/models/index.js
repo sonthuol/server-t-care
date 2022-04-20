@@ -59,6 +59,21 @@ db.user.belongsToMany(db.clinic, {
   timestamps: false,
 });
 
+//Một clinic có nhiều user
+db.doctor.belongsToMany(db.user, {
+  through: "user_doctors",
+  foreignKey: "doctorId",
+  otherKey: "userId",
+  timestamps: false,
+});
+//Một user có nhiều doctor
+db.user.belongsToMany(db.doctor, {
+  through: "user_doctors",
+  foreignKey: "userId",
+  otherKey: "doctorId",
+  timestamps: false,
+});
+
 // Một chuyên khoa có nhiều phòng khám
 db.specialty.belongsToMany(db.clinic, {
   through: "specialty_clinics",
