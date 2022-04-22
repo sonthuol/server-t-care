@@ -55,6 +55,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/clinic.routes")(app);
 require("./app/routes/specialty.routes")(app);
 require("./app/routes/doctor.routes")(app);
+require("./app/routes/schedule.routes")(app);
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

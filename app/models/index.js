@@ -27,6 +27,23 @@ db.specialty = require("../models/specialty.model")(sequelize, Sequelize);
 db.doctor = require("../models/doctor.model")(sequelize, Sequelize);
 //Tạo bảng bệnh nhân
 db.patient = require("../models/patient.model")(sequelize, Sequelize);
+//Tạo bảng lịch khám
+db.schedule = require("../models/schedule.model")(sequelize, Sequelize);
+
+//Một bác sĩ có nhiều lịch khám
+db.doctor.belongsToMany(db.schedule, {
+  through: "doctor_schedules",
+  foreignKey: "doctorId",
+  otherKey: "scheduleId",
+  timestamps: false,
+});
+//Một lịch khám thuộc nhiều bác sĩ
+db.schedule.belongsToMany(db.doctor, {
+  through: "doctor_schedules",
+  foreignKey: "scheduleId",
+  otherKey: "doctorId",
+  timestamps: false,
+});
 
 //Một clinic có nhiều user
 db.clinic.belongsToMany(db.user, {
@@ -118,5 +135,6 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId",
   timestamps: false,
 });
+
 db.ROLES = ["root", "admin", "doctor", "receptionist"];
 module.exports = db;

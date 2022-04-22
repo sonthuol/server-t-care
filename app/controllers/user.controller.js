@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 const Clinic = db.clinic;
+const Doctor = db.doctor;
 const Role = db.role;
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
@@ -147,6 +148,31 @@ exports.userBelongClinic = async (req, res) => {
       stauts: 200,
       message: "Success",
       data: idClinicOfUser.clinics,
+    });
+  } catch (error) {
+    res.status(500).send({
+      stauts: 500,
+      message: "Fail",
+    });
+  }
+};
+
+//isDoctor
+exports.userBelongDoctor = async (req, res) => {
+  try {
+    const idDoctorOfUser = await User.findOne({
+      include: [Doctor],
+      where: {
+        id: req.params.id,
+      },
+    });
+    console.log("====================================");
+    console.log(idDoctorOfUser);
+    console.log("====================================");
+    res.status(200).send({
+      stauts: 200,
+      message: "Success",
+      data: idDoctorOfUser.doctors,
     });
   } catch (error) {
     res.status(500).send({

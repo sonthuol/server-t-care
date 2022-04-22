@@ -17,6 +17,16 @@ module.exports = function (app) {
     controller.userBelongClinic
   );
 
+  //Người dùng thuộc bác sĩ
+  //method: GET
+  //Access: Admin
+  //URL:/api/userBelongDoctor/:id
+  app.get(
+    "/api/user/userBelongDoctor/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.userBelongDoctor
+  );
+
   //Ai cũng có quyền truy cập
   //method: GET
   //URL:/api/user/get-all-user
