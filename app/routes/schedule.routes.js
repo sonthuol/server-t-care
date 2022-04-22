@@ -6,4 +6,14 @@ module.exports = function (app) {
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
   });
+
+  //Tạo một lịch khám
+  //method: POST
+  //Access: Doctor
+  //URL:/api/schedules
+  app.post(
+    "/api/schedules",
+    [authJwt.verifyToken, authJwt.isDoctor],
+    controller.create
+  );
 };
