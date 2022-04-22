@@ -243,3 +243,25 @@ exports.deleteRestore = async (req, res) => {
     });
   }
 };
+
+//isClinic
+exports.doctorBelongClinic = async (req, res) => {
+  try {
+    const idClinicOfDoctor = await Doctor.findOne({
+      include: [Clinic],
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).send({
+      stauts: 200,
+      message: "Success",
+      data: idClinicOfDoctor.clinics,
+    });
+  } catch (error) {
+    res.status(500).send({
+      stauts: 500,
+      message: "Fail",
+    });
+  }
+};

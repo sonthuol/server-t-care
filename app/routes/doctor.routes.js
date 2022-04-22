@@ -7,6 +7,16 @@ module.exports = function (app) {
     next();
   });
 
+  //Bác sĩ thuộc phòng khám
+  //method: GET
+  //Access: Admin
+  //URL:/api/doctorBelongClinic/:id
+  app.get(
+    "/api/doctors/doctorBelongClinic/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.doctorBelongClinic
+  );
+
   //Hiển thị danh sách tất cả các bác sĩ
   //method: GET
   //Access: Root, Admin
