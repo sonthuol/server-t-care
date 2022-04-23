@@ -13,7 +13,7 @@ module.exports = function (app) {
   //URL:/api/schedules
   app.post(
     "/api/schedules",
-    [authJwt.verifyToken, authJwt.isDoctor],
+    // [authJwt.verifyToken, authJwt.isDoctor],
     controller.create
   );
 
@@ -25,5 +25,25 @@ module.exports = function (app) {
     "/api/schedules/:doctorId",
     // [authJwt.verifyToken, authJwt.isDoctor],
     controller.showScheduleByDay
+  );
+
+  //Hiển thị lịch khám bới bác sĩ và ngày nào
+  //method: POST
+  //Access: Doctor
+  //URL:/api/schedules
+  app.get(
+    "/api/schedules/getId/:doctorId",
+    // [authJwt.verifyToken, authJwt.isDoctor],
+    controller.showScheduleByDayGetId
+  );
+
+  //Cập nhật lịch khám
+  //method: PUT
+  //Access: Doctor
+  //URL:/api/schedules/:id
+  app.put(
+    "/api/schedules/:id",
+    // [authJwt.verifyToken, authJwt.isDoctor],
+    controller.update
   );
 };
