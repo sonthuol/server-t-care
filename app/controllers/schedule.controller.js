@@ -30,3 +30,34 @@ exports.create = async (req, res) => {
     });
   }
 };
+
+//Hiển thị lịch khám theo ngày
+exports.showScheduleByDay = async (req, res) => {
+  try {
+    const schedule = await Schedule.findAll({
+      attributes: ["time", "status"],
+      where: { day: req.query.day },
+      order: [["time", "ASC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.doctorId,
+          },
+          attributes: [],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị lịch khám",
+      data: schedule,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Ngày tháng năm không tồn tại " + error.message,
+      data: [],
+    });
+  }
+};

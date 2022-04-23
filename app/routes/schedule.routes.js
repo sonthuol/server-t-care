@@ -16,4 +16,14 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isDoctor],
     controller.create
   );
+
+  //Hiển thị lịch khám bới bác sĩ và ngày nào
+  //method: POST
+  //Access: Doctor
+  //URL:/api/schedules
+  app.get(
+    "/api/schedules/:doctorId",
+    // [authJwt.verifyToken, authJwt.isDoctor],
+    controller.showScheduleByDay
+  );
 };
