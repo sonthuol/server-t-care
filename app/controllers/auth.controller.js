@@ -58,6 +58,7 @@ exports.signIn = async (req, res) => {
     const user = await User.findOne({
       where: {
         username: req.body.username,
+        isActive: true,
       },
     });
 
