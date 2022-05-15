@@ -1,6 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/clinic.controller");
-
+const upload = require("../config/multer");
 module.exports = function (app) {
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
@@ -46,13 +46,13 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isRoot],
     controller.create
   );
-
   //Cập nhật phòng khám
   //method: PUT
   //Access: Root, Admin
   //URL:/api/clinics/:id
   app.put(
     "/api/clinics/:id",
+    upload.single("file"),
     [authJwt.verifyToken, authJwt.isRootAdmin],
     controller.update
   );

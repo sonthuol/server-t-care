@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { clinic } = require("../models");
-
+const cloudinary = require("../config/cloudinary");
 //Danh sách các phòng khám
 exports.getAllClinics = async (req, res) => {
   try {
@@ -80,21 +80,27 @@ exports.details = async (req, res) => {
 
 //Sửa phòng khám
 exports.update = async (req, res) => {
-  try {
-    const clinic = await Clinic.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.status(200).send({
-      status: 200,
-      message: "Cập nhật phòng khám thành công",
-    });
-  } catch (error) {
-    res.status(500).send({
-      status: 500,
-      message: "Cập nhật phòng khám không thành công",
-    });
+  // try {
+  //   const clinic = await Clinic.update(req.body, {
+  //     where: {
+  //       id: req.params.id,
+  //     },
+  //   });
+  //   res.status(200).send({
+  //     status: 200,
+  //     message: "Cập nhật phòng khám thành công",
+  //   });
+  // } catch (error) {
+  //   res.status(500).send({
+  //     status: 500,
+  //     message: "Cập nhật phòng khám không thành công",
+  //   });
+  // }
+  const uploader = async (path) => await cloudinary.uploads(path, "images");
+  if (req.method == "PUT") {
+    const file = req.file;
+    const { path } = file;
+    const newPath = await uploader(path);
   }
 };
 
