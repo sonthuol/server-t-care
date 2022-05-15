@@ -43,6 +43,7 @@ module.exports = function (app) {
   //URL:/api/clinics
   app.post(
     "/api/clinics",
+    upload.single("file"),
     [authJwt.verifyToken, authJwt.isRoot],
     controller.create
   );
