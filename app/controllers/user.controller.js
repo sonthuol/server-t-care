@@ -22,6 +22,9 @@ exports.getAllUser = async (req, res) => {
       include: [
         {
           model: Role,
+          where: {
+            [Op.or]: [{ id: 1 }, { id: 2 }],
+          },
         },
       ],
     });
