@@ -14,16 +14,16 @@ exports.getAllUser = async (req, res) => {
         exclude: ["password"],
       },
       where: {
-        isDelete: {
-          [Op.or]: [0, null],
-        },
+        isDelete: 0,
       },
       order: [["id", "DESC"]],
       include: [
         {
           model: Role,
           where: {
-            [Op.or]: [{ id: 1 }, { id: 2 }],
+            id: {
+              [Op.in]: [1, 2],
+            },
           },
         },
       ],

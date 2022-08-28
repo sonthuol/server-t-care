@@ -27,6 +27,9 @@ exports.signUp = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
+      isDelete: 0,
+      isActive: 1,
+      addBy: req.body.addBy,
     });
 
     if (req.body.roles) {
@@ -58,7 +61,9 @@ exports.signIn = async (req, res) => {
     const user = await User.findOne({
       where: {
         username: req.body.username,
-        isActive: true,
+        isActive: {
+          [Op.or]: [true, null],
+        },
       },
     });
 
