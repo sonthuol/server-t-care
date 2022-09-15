@@ -6,7 +6,7 @@ const User = db.user;
 const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const { clinic } = require("../models");
-
+const cloudinary = require("../config/cloudinary");
 exports.getAllDoctors = async (req, res) => {
   try {
     const doctor = await Doctor.findAll({
@@ -42,8 +42,21 @@ exports.getAllDoctors = async (req, res) => {
 
 //Tạo mới bác sĩ
 exports.create = async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  console.log(req.method);
   try {
-    const doctor = await Doctor.create(req.body);
+    const uploader = async (path) => await cloudinary.uploads(path, "images");
+    if (req.method == "POST") {
+      if (req.file) {
+        const file = req.file;
+        const { path } = file;
+        console.log(path);
+        const newPath = await uploader(path);
+        data["image"] = newPath.url;
+      }
+    }
+    const doctor = await Doctor.create(data);
     const clinic = await Clinic.findOne({
       where: {
         id: req.body.clinicId,

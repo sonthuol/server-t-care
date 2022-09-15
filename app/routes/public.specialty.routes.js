@@ -8,7 +8,14 @@ module.exports = function (app) {
 
   //Hiển thị danh sách tất cả các chuyên khoa
   //method: GET
-  //Access: Root, Admin
   //URL:/api/specialties
   app.get("/api/public/specialties", controller.getAllSpecialties);
+
+  //Hiển thị danh sách tất cả các chuyên khoa bởi id của phòng khám
+  //method: GET
+  //URL:/api/specialties
+  app.get(
+    "/api/public/specialties/:clinic_id",
+    controller.getAllSpecialtiesByClinicId
+  );
 };

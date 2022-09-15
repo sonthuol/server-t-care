@@ -8,7 +8,6 @@ module.exports = function (app) {
 
   //Hiển thị danh sách tất cả các phòng khám
   //method: GET
-  //Access: Root, Admin
   //URL:/api/clinics
   app.get("/api/public/clinics", controller.getAllClinics);
 };

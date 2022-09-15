@@ -30,3 +30,42 @@ exports.getAllSpecialties = async (req, res) => {
     });
   }
 };
+
+exports.getAllSpecialtiesByClinicId = async (req, res) => {
+  console.log("====================================");
+  console.log(req.params.clinic_id);
+  console.log("====================================");
+  try {
+    const specialty = await Specialty.findAll({
+      where: {
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Clinic,
+          attributes: ["id"],
+          where: {
+            id: {
+              [Op.eq]: req.params.clinic_id,
+            },
+          },
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách phòng khám thành công",
+      data: specialty,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Hiển thị danh sách phòng khám không thành công " + error.message,
+      data: [],
+    });
+  }
+};
