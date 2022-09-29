@@ -15,6 +15,12 @@ exports.getAllSpecialties = async (req, res) => {
         },
       },
       order: [["id", "DESC"]],
+      include: [
+        {
+          model: Clinic,
+          attributes: ["id"],
+        },
+      ],
     });
     res.status(200).send({
       status: 200,
