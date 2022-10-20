@@ -35,7 +35,7 @@ exports.create = async (req, res) => {
 exports.showScheduleByDay = async (req, res) => {
   try {
     const schedule = await Schedule.findAll({
-      attributes: ["time", "status"],
+      attributes: ["id", "time", "status"],
       where: { day: req.query.day },
       order: [["time", "ASC"]],
       include: [
