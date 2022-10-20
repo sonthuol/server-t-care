@@ -29,6 +29,42 @@ db.doctor = require("../models/doctor.model")(sequelize, Sequelize);
 db.patient = require("../models/patient.model")(sequelize, Sequelize);
 //Tạo bảng lịch khám
 db.schedule = require("../models/schedule.model")(sequelize, Sequelize);
+//Tạo bảng hồ sơ khám bệnh
+db.medical_records = require("../models/medical_records.model")(
+  sequelize,
+  Sequelize
+);
+
+//Một bệnh nhân thì có một hồ sơ khám bệnh
+db.patient.belongsToMany(db.medical_records, {
+  through: "patient_medical_records",
+  foreignKey: "patientId",
+  otherKey: "medicalRecordId",
+  timestamps: false,
+});
+//Một hồ sơ khám bệnh thì có một bệnh nhân
+db.medical_records.belongsToMany(db.patient, {
+  through: "patient_medical_records",
+  foreignKey: "medicalRecordId",
+  otherKey: "patientId",
+  timestamps: false,
+});
+
+// Một bác sĩ thì khám nhiều hồ sơ khám bệnh
+db.doctor.belongsToMany(db.medical_records, {
+  through: "doctor_medical_records",
+  foreignKey: "doctorId",
+  otherKey: "medicalRecordId",
+  timestamps: false,
+});
+
+// Một hồ sơ khám bệnh thì có một bác sĩ khám
+db.medical_records.belongsToMany(db.doctor, {
+  through: "doctor_medical_records",
+  foreignKey: "medicalRecordId",
+  otherKey: "doctorId",
+  timestamps: false,
+});
 
 //Một bác sĩ có nhiều lịch khám
 db.doctor.belongsToMany(db.schedule, {

@@ -87,9 +87,7 @@ exports.signIn = async (req, res) => {
       status: 200,
       message: "Đăng nhập thành công",
       data: {
-        id: patient.id,
-        name: patient.name,
-        phoneNumber: patient.phoneNumber,
+        patient,
       },
     });
   } catch (error) {
