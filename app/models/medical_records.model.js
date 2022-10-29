@@ -27,6 +27,10 @@ module.exports = (sequelize, Sequelize) => {
     address: {
       type: Sequelize.TEXT,
     },
+    status: {
+      type: Sequelize.BOOLEAN,
+      default: true,
+    },
     isActive: {
       type: Sequelize.BOOLEAN,
       default: true,

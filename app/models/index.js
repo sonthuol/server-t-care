@@ -50,6 +50,21 @@ db.medical_records.belongsToMany(db.patient, {
   timestamps: false,
 });
 
+//Một lịch khám thì có một hồ sơ khám bệnh
+db.schedule.belongsToMany(db.medical_records, {
+  through: "schedule_medical_records",
+  foreignKey: "ScheduleId",
+  otherKey: "medicalRecordId",
+  timestamps: false,
+});
+//Một hồ sơ khám bệnh thì có một lịch khám
+db.medical_records.belongsToMany(db.schedule, {
+  through: "schedule_medical_records",
+  foreignKey: "medicalRecordId",
+  otherKey: "ScheduleId",
+  timestamps: false,
+});
+
 // Một bác sĩ thì khám nhiều hồ sơ khám bệnh
 db.doctor.belongsToMany(db.medical_records, {
   through: "doctor_medical_records",

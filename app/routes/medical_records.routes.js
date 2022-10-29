@@ -10,5 +10,13 @@ module.exports = function (app) {
   //Đặt lịch khám
   //method: POST
   //URL: api/medical_records/register
-  app.post("/api/medical_records/register", controller.register);
+  app.post("/api/medical-records/register", controller.register);
+
+  //Hiển thị tất cả hồ sợ khám bệnh với trạng thái đang chờ xác nhận
+  //method: POST
+  //URL: api/medical_records/register
+  app.get(
+    "/api/medical-records/get-all-medical-record-with-waiting-confirm/:patientId",
+    controller.getAllMedicalRecordWithStatusWaitingConfirm
+  );
 };

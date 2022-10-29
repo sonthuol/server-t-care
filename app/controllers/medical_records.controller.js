@@ -2,6 +2,7 @@ const db = require("../models");
 const MedicalRecords = db.medical_records;
 const Doctor = db.doctor;
 const Patient = db.patient;
+const Schedule = db.schedule;
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcryptjs");
 
@@ -30,6 +31,7 @@ exports.register = async (req, res) => {
       address: req.body.address,
       symptom: req.body.symptom,
       gender: req.body.gender,
+      status: req.body.status,
     });
 
     const doctor = await Doctor.findOne({
@@ -44,17 +46,67 @@ exports.register = async (req, res) => {
       },
     });
 
+    const schedule = await Schedule.findOne({
+      where: {
+        id: req.body.scheduleId,
+      },
+    });
+
+    await schedule.update({ status: 3 });
+    await schedule.save();
+
     medicalRecords.setDoctors(doctor);
     medicalRecords.setPatients(patient);
+    medicalRecords.setSchedules(schedule);
 
     return res.status(200).send({
       status: 200,
-      message: "Đăng ký lịch thành công",
+      message: "Đăng ký lịch khám thành công",
     });
   } catch (error) {
     res.status(500).send({
       status: 500,
       message: error.message,
+    });
+  }
+};
+
+// Hiển thị tất cả hồ sơ khám bệnh với trạng thái
+exports.getAllMedicalRecordWithStatusWaitingConfirm = async (req, res) => {
+  try {
+    const medicalRecords = await MedicalRecords.findAll({
+      attributes: ["id"],
+      where: {
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+        // status: 1,
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Schedule,
+          attributes: ["day", "time"],
+        },
+        {
+          model: Patient,
+          where: {
+            id: req.params.patientId,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách lịch khám thành công",
+      data: medicalRecords,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách lịch khám không thành công",
+      data: [],
     });
   }
 };
