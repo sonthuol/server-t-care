@@ -64,6 +64,7 @@ require("./app/routes/public.specialty.routes")(app);
 require("./app/routes/public.doctor.routes")(app);
 require("./app/routes/patient.routes")(app);
 require("./app/routes/medical_records.routes")(app);
+require("./app/routes/appointment.routes")(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
