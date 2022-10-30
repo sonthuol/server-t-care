@@ -10,7 +10,11 @@ const jwt = require("jsonwebtoken");
 //Tạo mới bác sĩ
 exports.create = async (req, res) => {
   try {
-    const schedule = await Schedule.create(req.body);
+    const schedule = await Schedule.create({
+      day: req.body.day,
+      status: req.body.status,
+      time: req.body.time,
+    });
     const doctor = await Doctor.findOne({
       where: {
         id: req.body.doctorId,
