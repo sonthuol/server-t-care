@@ -16,4 +16,14 @@ module.exports = function (app) {
     // [authJwt.verifyToken, authJwt.isDoctor],
     controller.showAppointmentByDay
   );
+
+  //Hiển thị chi tiết lịch khám
+  //method: Get
+  //Access: Doctor
+  //URL: /api/appointment/details/:medicalRecordId
+  app.get(
+    "/api/appointment/details/:medicalRecordId",
+    // [authJwt.verifyToken, authJwt.isDoctor],
+    controller.getMedicalRecordDetails
+  );
 };
