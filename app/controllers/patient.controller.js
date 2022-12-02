@@ -48,6 +48,36 @@ exports.signUp = async (req, res) => {
   }
 };
 
+//Tạo một tài khoản mới cho người dùng
+exports.updateAccountPatient = async (req, res) => {
+  //Lưu tài khoản người dùng vào DB
+  try {
+    const patient = await Patient.update(
+      {
+        name: req.body.name,
+        birthday: req.body.birthday,
+        phoneNumber: req.body.phoneNumber,
+        address: req.body.address,
+        gender: req.body.gender,
+      },
+      {
+        where: {
+          id: req.params.patientId,
+        },
+      }
+    );
+    return res.status(200).send({
+      status: 200,
+      message: "Cập nhật thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: error.message,
+    });
+  }
+};
+
 //Đăng nhập tài khoản
 exports.signIn = async (req, res) => {
   try {

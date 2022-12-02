@@ -30,3 +30,31 @@ exports.getAllClinics = async (req, res) => {
     });
   }
 };
+
+//Danh sách các phòng khám
+exports.getFindClinicByClinicName = async (req, res) => {
+  try {
+    const clinic = await Clinic.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${req.params.key}%`,
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách phòng khám thành công",
+      data: clinic,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách phòng khám không thành công",
+      data: [],
+    });
+  }
+};

@@ -16,4 +16,9 @@ module.exports = function (app) {
   //method: POST
   //URL: api/auth/login
   app.post("/api/patient/signin", controller.signIn);
+
+  //Cập nhật thông tin tài khoản bệnh nhân
+  //method: PUT
+  //URL: api/patient/:patientId
+  app.put("/api/patient/:patientId", controller.updateAccountPatient);
 };

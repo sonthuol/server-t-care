@@ -79,3 +79,37 @@ exports.getAllDoctorsByClinicIdAndSpecialtyId = async (req, res) => {
     });
   }
 };
+
+exports.getFindDoctorByDoctorName = async (req, res) => {
+  try {
+    const doctor = await Doctor.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${req.params.key}%`,
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Specialty,
+          model: Clinic,
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách phòng khám thành công",
+      data: doctor,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Hiển thị danh sách phòng khám không thành công " + error.message,
+      data: [],
+    });
+  }
+};

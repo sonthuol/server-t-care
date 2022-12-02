@@ -10,4 +10,9 @@ module.exports = function (app) {
   //method: GET
   //URL:/api/clinics
   app.get("/api/public/clinics", controller.getAllClinics);
+
+  //Hiển thị danh sách tất cả các phòng khám
+  //method: GET
+  //URL:/api/clinics
+  app.get("/api/public/clinics/:key", controller.getFindClinicByClinicName);
 };

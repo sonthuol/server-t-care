@@ -75,3 +75,36 @@ exports.getAllSpecialtiesByClinicId = async (req, res) => {
     });
   }
 };
+
+exports.getFindSpecialtyBySpecialtyName = async (req, res) => {
+  try {
+    const specialty = await Specialty.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${req.params.key}%`,
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Clinic,
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách phòng khám thành công",
+      data: specialty,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Hiển thị danh sách phòng khám không thành công " + error.message,
+      data: [],
+    });
+  }
+};

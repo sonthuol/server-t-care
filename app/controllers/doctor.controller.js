@@ -4,6 +4,8 @@ const Clinic = db.clinic;
 const Doctor = db.doctor;
 const User = db.user;
 const Op = db.Sequelize.Op;
+const Patient = db.patient;
+const MedicalRecords = db.medical_records;
 const jwt = require("jsonwebtoken");
 const { clinic } = require("../models");
 const cloudinary = require("../config/cloudinary");
@@ -35,6 +37,46 @@ exports.getAllDoctors = async (req, res) => {
       status: 500,
       message:
         "Hiển thị danh sách phòng khám không thành công " + error.message,
+      data: [],
+    });
+  }
+};
+
+exports.getAllPatientByDoctorId = async (req, res) => {
+  try {
+    const patients = await Patient.findAll({
+      where: {
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: MedicalRecords,
+          include: [
+            {
+              model: Doctor,
+              where: {
+                id: req.params.doctorId,
+              },
+            },
+          ],
+        },
+      ],
+    });
+    const result = patients.filter((item) => item.medical_records.length != 0);
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị thành công danh sách bệnh nhân của bác sĩ",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message:
+        "Hiển thị không thành công danh sách bệnh nhân của bác sĩ " +
+        error.message,
       data: [],
     });
   }

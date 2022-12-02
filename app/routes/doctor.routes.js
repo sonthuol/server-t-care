@@ -56,6 +56,16 @@ module.exports = function (app) {
     controller.changeStatus
   );
 
+  //Hiển thị bệnh nhân đặt lịch khám của bác sĩ
+  //method: get
+  //Access: doctor
+  //URL:/api/doctors/getPatientByDoctorId:doctorId
+  app.get(
+    "/api/doctors/getPatientByDoctorId/:doctorId",
+    // [authJwt.verifyToken, authJwt.isDoctor],
+    controller.getAllPatientByDoctorId
+  );
+
   //Hiển thị bác sĩ theo id
   //method: GET
   //Access: Admin

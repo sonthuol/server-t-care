@@ -71,16 +71,75 @@ exports.register = async (req, res) => {
   }
 };
 
+// Hiển thị tất cả hồ sơ khám bệnh được đặt bởi bác sĩ
+exports.getAllMedicalRecordByDoctorId = async (req, res) => {
+  try {
+    const medicalRecords = await MedicalRecords.findAll({
+      where: {
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.doctorId,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách hồ sơ khám bệnh thành công",
+      data: medicalRecords,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách hồ sơ khám bệnh không thành công",
+      data: [],
+    });
+  }
+};
+
+//Cập nhật trạng thái lịch khám
+exports.updateStatusAppointment = async (req, res) => {
+  try {
+    const doctor = await MedicalRecords.update(
+      { status: req.body.status },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      message: "Cập nhật trạng thái lịch khám thành công",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Cập nhật trạng thái lịch khám không thành công",
+    });
+  }
+};
+
 // Hiển thị tất cả hồ sơ khám bệnh với trạng thái
 exports.getAllMedicalRecordWithStatusWaitingConfirm = async (req, res) => {
   try {
+    const { status } = req.query;
+
     const medicalRecords = await MedicalRecords.findAll({
       attributes: ["id"],
       where: {
         isDelete: {
           [Op.or]: [0, null],
         },
-        // status: 1,
+        status: status - 1,
       },
       order: [["id", "DESC"]],
       include: [

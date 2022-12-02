@@ -20,4 +20,9 @@ module.exports = function (app) {
     "/api/public/doctors/:clinic_id/:specialty_id",
     controller.getAllDoctorsByClinicIdAndSpecialtyId
   );
+
+  //Hiển thị danh sách tất cả các bác sĩ
+  //method: GET
+  //URL:/api/doctors
+  app.get("/api/public/doctors/:key", controller.getFindDoctorByDoctorName);
 };

@@ -18,4 +18,12 @@ module.exports = function (app) {
     "/api/public/specialties/:clinic_id",
     controller.getAllSpecialtiesByClinicId
   );
+
+  //Hiển thị danh sách tất cả các bác sĩ
+  //method: GET
+  //URL:/api/doctors
+  app.get(
+    "/api/public/specialties/find/:key",
+    controller.getFindSpecialtyBySpecialtyName
+  );
 };
