@@ -95,6 +95,8 @@ exports.getFindDoctorByDoctorName = async (req, res) => {
       include: [
         {
           model: Specialty,
+        },
+        {
           model: Clinic,
         },
       ],
