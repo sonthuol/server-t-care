@@ -115,4 +115,34 @@ module.exports = function (app) {
     // [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteRestore
   );
+
+  //Hiển thị số bệnh nhân khám theo tuần
+  //method: DELETE
+  //Access: Admin
+  //URL:/api/doctors/restore/:id
+  app.get(
+    "/api/doctors/display-the-number-of-patients-examined-by-week/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.displayTheNumberOfPatientsExaminedByWeek
+  );
+
+  //Hiển thị số bệnh nhân khám theo tháng
+  //method: DELETE
+  //Access: Admin
+  //URL:/api/doctors/restore/:id
+  app.get(
+    "/api/doctors/display-the-number-of-patients-examined-by-month/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.displayTheNumberOfPatientsExaminedByMonth
+  );
+
+  //Hiển thị số bệnh nhân khám theo tháng
+  //method: DELETE
+  //Access: Admin
+  //URL:/api/doctors/restore/:id
+  app.get(
+    "/api/doctors/display-the-number-of-patients-examined-by-year/:id",
+    // [authJwt.verifyToken, authJwt.isAdmin],
+    controller.displayTheNumberOfPatientsExaminedByYear
+  );
 };

@@ -320,3 +320,228 @@ exports.doctorBelongClinic = async (req, res) => {
     });
   }
 };
+
+// Hiển thị tất cả hồ sơ khám bệnh được đặt bởi bác sĩ
+exports.displayTheNumberOfPatientsExaminedByWeek = async (req, res) => {
+  var today = new Date();
+  today.setDate(today.getDate());
+
+  var lastWeek = new Date();
+  lastWeek.setDate(lastWeek.getDate() + 7);
+
+  var nextWeek = new Date();
+  nextWeek.setDate(nextWeek.getDate() - 7);
+  try {
+    const lastWeekCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            today.toISOString().split("T")[0] + " 00:00:00",
+            lastWeek.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    const nextWeekCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            nextWeek.toISOString().split("T")[0] + " 00:00:00",
+            today.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách hồ sơ khám bệnh thành công",
+      data: {
+        lastWeekCount,
+        nextWeekCount,
+        summary: lastWeekCount - nextWeekCount,
+      },
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách hồ sơ khám bệnh không thành công" + error,
+      data: [],
+    });
+  }
+};
+
+// Hiển thị tất cả hồ sơ khám bệnh được đặt bởi bác sĩ
+exports.displayTheNumberOfPatientsExaminedByMonth = async (req, res) => {
+  var today = new Date();
+  today.setDate(today.getDate());
+
+  var lastMonth = new Date();
+  lastMonth.setDate(lastMonth.getDate() + 30);
+
+  var nextMonth = new Date();
+  nextMonth.setDate(nextMonth.getDate() - 30);
+  try {
+    const lastMonthCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            today.toISOString().split("T")[0] + " 00:00:00",
+            lastMonth.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    const nextMonthCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            nextMonth.toISOString().split("T")[0] + " 00:00:00",
+            today.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách hồ sơ khám bệnh thành công",
+      data: {
+        lastMonthCount,
+        nextMonthCount,
+        summary: lastMonthCount - nextMonthCount,
+      },
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách hồ sơ khám bệnh không thành công" + error,
+      data: [],
+    });
+  }
+};
+
+// Hiển thị tất cả hồ sơ khám bệnh được đặt bởi bác sĩ
+exports.displayTheNumberOfPatientsExaminedByYear = async (req, res) => {
+  var today = new Date();
+  today.setDate(today.getDate());
+
+  var lastYear = new Date();
+  lastYear.setDate(lastYear.getDate() + 360);
+
+  var nextYear = new Date();
+  nextYear.setDate(nextYear.getDate() - 360);
+  try {
+    const lastYearCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            today.toISOString().split("T")[0] + " 00:00:00",
+            lastYear.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    const nextYearCount = await MedicalRecords.count({
+      where: {
+        createdAt: {
+          [Op.between]: [
+            nextYear.toISOString().split("T")[0] + " 00:00:00",
+            today.toISOString().split("T")[0] + " 00:00:00",
+          ],
+        },
+        isDelete: {
+          [Op.or]: [0, null],
+        },
+      },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Doctor,
+          where: {
+            id: req.params.id,
+          },
+          attributes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send({
+      status: 200,
+      message: "Hiển thị danh sách hồ sơ khám bệnh thành công",
+      data: {
+        lastYearCount,
+        nextYearCount,
+        summary: lastYearCount - nextYearCount,
+      },
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: 500,
+      message: "Hiển thị danh sách hồ sơ khám bệnh không thành công" + error,
+      data: [],
+    });
+  }
+};
