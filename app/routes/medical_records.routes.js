@@ -28,6 +28,37 @@ module.exports = function (app) {
     controller.getAllMedicalRecordByDoctorId
   );
 
+  //Số lượt tài khoản đăng ký trong hệ thống
+  //method: POST
+  //URL: api/medical_records/register
+  app.get(
+    "/api/phan-tich/phan-tich-so-luong-phongkham-bacsi-benhnhan",
+    controller.phanTichSoLuong
+  );
+
+  //Số lượt tài khoản đăng ký trong hệ thống
+  //method: POST
+  //URL: api/medical_records/register
+  app.get(
+    "/api/phan-tich/phan-tich-so-luong-phongkham-theo-thang",
+    controller.phanTichSoLuongPhongKhamTheoThang
+  );
+
+  //Số lượt tài khoản đăng ký trong hệ thống
+  //method: POST
+  //URL: api/medical_records/register
+  app.get(
+    "/api/phan-tich-phong-kham/phan-tich-so-luong-phongkham-bacsi-benhnhan/:id",
+    controller.phanTichPhongKhamSoLuong
+  );
+
+  //Số lượt tài khoản đăng ký trong hệ thống
+  //method: POST
+  //URL: api/medical_records/register
+  app.get(
+    "/api/phan-tich-phong-kham/phan-tich-so-luong-phongkham-theo-thang/:id",
+    controller.phanTichPhongKhamDoanhThuTheoThang
+  );
   //Hiển thị tất cả hồ sợ khám bệnh với trạng thái đang chờ xác nhận
   //method: POST
   //URL: api/medical_records/register
